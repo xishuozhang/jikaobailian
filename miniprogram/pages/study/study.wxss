@@ -1,0 +1,283 @@
+page {
+  background: #F5F7FB;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 36rpx 30rpx 48rpx;
+  box-sizing: border-box;
+}
+
+.header-card,
+.state-card,
+.dashboard-card,
+.entry-list,
+.mock-card,
+.category-card,
+.record-card {
+  border: 1rpx solid #e4ebf5;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
+  box-sizing: border-box;
+}
+
+.header-card {
+  padding: 32rpx;
+  margin-bottom: 28rpx;
+}
+
+.page-title {
+  color: #172033;
+  font-size: 40rpx;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.page-desc {
+  margin-top: 12rpx;
+  color: #6b7688;
+  font-size: 27rpx;
+  line-height: 1.6;
+}
+
+.section-title {
+  margin: 26rpx 0 18rpx;
+  color: #172033;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.state-card {
+  padding: 30rpx;
+  color: #6b7688;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.empty-state {
+  text-align: center;
+}
+
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 18rpx;
+}
+
+.dashboard-card {
+  padding: 26rpx 22rpx;
+}
+
+.dashboard-value {
+  color: #172033;
+  font-size: 42rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.dashboard-label {
+  margin-top: 10rpx;
+  color: #7b8496;
+  font-size: 24rpx;
+}
+
+.dashboard-card.good .dashboard-value {
+  color: #14a46c;
+}
+
+.dashboard-card.bad .dashboard-value {
+  color: #e35d5d;
+}
+
+.dashboard-card.warn .dashboard-value {
+  color: #d9831f;
+}
+
+.entry-list {
+  margin-top: 24rpx;
+  overflow: hidden;
+}
+
+.entry-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 26rpx 30rpx;
+}
+
+.entry-card + .entry-card {
+  border-top: 1rpx solid #edf1f6;
+}
+
+.entry-title,
+.mock-card-title {
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 700;
+}
+
+.entry-desc {
+  margin-top: 8rpx;
+  color: #718096;
+  font-size: 24rpx;
+}
+
+.entry-action {
+  color: #2F80ED;
+  font-size: 26rpx;
+  font-weight: 700;
+}
+
+.mock-card,
+.category-card {
+  padding: 28rpx;
+  margin-top: 24rpx;
+}
+
+.mock-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16rpx;
+  margin-top: 22rpx;
+}
+
+.mock-value {
+  color: #2F80ED;
+  font-size: 38rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.mock-label {
+  margin-top: 8rpx;
+  color: #7b8496;
+  font-size: 23rpx;
+}
+
+.recent-tip {
+  margin-top: 22rpx;
+  padding: 18rpx;
+  border-radius: 14rpx;
+  background: #f0f6ff;
+  color: #405064;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.record-card {
+  margin-bottom: 20rpx;
+  padding: 30rpx;
+}
+
+.record-head,
+.record-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.type-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 42rpx;
+  padding: 0 14rpx;
+  border-radius: 999rpx;
+  background: #eaf2ff;
+  color: #2F80ED;
+  font-size: 23rpx;
+  font-weight: 600;
+  line-height: 42rpx;
+}
+
+.date {
+  color: #9aa3b3;
+  font-size: 24rpx;
+}
+
+.question-title {
+  margin-top: 16rpx;
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.record-foot {
+  margin-top: 18rpx;
+}
+
+.answer {
+  flex: 1;
+  margin-right: 18rpx;
+  color: #6b7688;
+  font-size: 26rpx;
+  line-height: 1.45;
+}
+
+.result {
+  flex: 0 0 auto;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.result.right {
+  background: #e8f8f1;
+  color: #159262;
+}
+
+.result.wrong {
+  background: #fff0ee;
+  color: #d65348;
+}
+
+.category-empty {
+  margin-top: 18rpx;
+  color: #7b8496;
+  font-size: 26rpx;
+}
+
+.category-list {
+  margin-top: 18rpx;
+}
+
+.category-row + .category-row {
+  margin-top: 24rpx;
+}
+
+.category-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.category-name {
+  flex: 1;
+  min-width: 0;
+  color: #263044;
+  font-size: 27rpx;
+  font-weight: 700;
+}
+
+.category-meta {
+  flex: 0 0 auto;
+  margin-left: 18rpx;
+  color: #6b7688;
+  font-size: 24rpx;
+}
+
+.category-track {
+  height: 14rpx;
+  margin-top: 14rpx;
+  border-radius: 999rpx;
+  background: #e8edf6;
+  overflow: hidden;
+}
+
+.category-fill {
+  height: 100%;
+  border-radius: 999rpx;
+  background: #2F80ED;
+}

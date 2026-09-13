@@ -1,0 +1,62 @@
+@import "../adminQuestions/adminQuestions.wxss";
+
+.user-card {
+  border: 1rpx solid #e4ebf5;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
+  box-sizing: border-box;
+  padding: 28rpx;
+  margin-bottom: 20rpx;
+}
+
+.user-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.user-name {
+  color: #172033;
+  font-size: 31rpx;
+  font-weight: 700;
+}
+
+.openid,
+.meta-line {
+  margin-top: 10rpx;
+  color: #6b7688;
+  font-size: 25rpx;
+  line-height: 1.5;
+}
+
+.result {
+  flex: 0 0 auto;
+  padding: 8rpx 16rpx;
+  border-radius: 999rpx;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.result.right {
+  background: #e8f8f1;
+  color: #159262;
+}
+
+.result.wrong {
+  background: #eef3fb;
+  color: #64748b;
+}
+
+.picker-btn {
+  height: 78rpx;
+  padding: 0 18rpx;
+  border: 1rpx solid #dce5f2;
+  border-radius: 14rpx;
+  background: #ffffff;
+  color: #405064;
+  font-size: 28rpx;
+  font-weight: 600;
+  line-height: 78rpx;
+  text-align: center;
+}

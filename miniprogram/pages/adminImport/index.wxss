@@ -1,0 +1,131 @@
+@import "../adminQuestionForm/adminQuestionForm.wxss";
+
+.json-area {
+  min-height: 520rpx;
+  font-family: monospace;
+}
+
+.mode-tabs {
+  display: flex;
+  gap: 12rpx;
+  margin-bottom: 22rpx;
+}
+
+.mode-tab {
+  flex: 1;
+  padding: 16rpx 8rpx;
+  border: 1rpx solid #dce5f2;
+  border-radius: 14rpx;
+  color: #405064;
+  font-size: 25rpx;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mode-tab.active {
+  border-color: #2F80ED;
+  background: #eef5ff;
+  color: #2F80ED;
+}
+
+.file-btn {
+  width: 100%;
+}
+
+.file-name {
+  margin-top: 16rpx;
+  padding: 18rpx;
+  border-radius: 14rpx;
+  background: #f5f7fb;
+  color: #6b7688;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.result-line {
+  margin-top: 18rpx;
+  padding: 18rpx;
+  border-radius: 14rpx;
+  background: #f0f6ff;
+  color: #405064;
+  font-size: 26rpx;
+  line-height: 1.5;
+}
+
+.validate-error-list {
+  margin-top: 14rpx;
+  padding: 18rpx;
+  border-radius: 14rpx;
+  background: #fff4f2;
+}
+
+.import-btn {
+  margin-top: 22rpx;
+}
+
+.result-card {
+  margin-top: 22rpx;
+  padding: 28rpx;
+  border: 1rpx solid #e4ebf5;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
+  box-sizing: border-box;
+}
+
+.result-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16rpx;
+  margin-top: 22rpx;
+}
+
+.result-stat {
+  padding: 20rpx;
+  border-radius: 16rpx;
+  background: #f5f7fb;
+}
+
+.result-stat.success {
+  background: #edf9f1;
+}
+
+.result-stat.skip {
+  background: #fff7e6;
+}
+
+.result-stat.fail {
+  background: #fff4f2;
+}
+
+.stat-value {
+  color: #172033;
+  font-size: 36rpx;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.stat-label {
+  margin-top: 8rpx;
+  color: #6b7688;
+  font-size: 24rpx;
+  line-height: 1.3;
+}
+
+.result-block {
+  margin-top: 22rpx;
+}
+
+.error-text {
+  margin-top: 10rpx;
+  color: #d65348;
+  font-size: 25rpx;
+  line-height: 1.5;
+}
+
+.skip-text {
+  margin-top: 10rpx;
+  color: #9a6100;
+  font-size: 25rpx;
+  line-height: 1.5;
+}

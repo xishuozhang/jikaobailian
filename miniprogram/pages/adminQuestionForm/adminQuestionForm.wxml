@@ -1,0 +1,56 @@
+<view class="page">
+  <view class="form-card">
+    <view class="label">题干</view>
+    <textarea class="textarea" value="{{form.title}}" data-field="title" bindinput="updateField" placeholder="请输入题干" />
+
+    <view class="label">题型</view>
+    <picker mode="selector" range="{{['单选题','多选题','判断题']}}" bindchange="changeType">
+      <view class="picker">{{form.type}}</view>
+    </picker>
+
+    <view class="label">图片地址</view>
+    <input class="input" value="{{form.imageUrl}}" data-field="imageUrl" bindinput="updateField" placeholder="可为空" />
+    <view class="image-actions">
+      <button class="nav-btn image-btn" loading="{{imageUploading}}" disabled="{{imageUploading}}" bindtap="chooseQuestionImage">
+        {{imageUploading ? '上传中' : '选择图片'}}
+      </button>
+      <button wx:if="{{form.imageUrl}}" class="nav-btn image-btn danger" disabled="{{imageUploading}}" bindtap="removeQuestionImage">删除图片</button>
+    </view>
+    <view wx:if="{{form.imageUrl}}" class="image-preview-wrap">
+      <image class="image-preview" src="{{form.imageUrl}}" mode="widthFix"></image>
+      <view class="image-url-text">{{form.imageUrl}}</view>
+    </view>
+
+    <view class="label">选项</view>
+    <view wx:for="{{form.options}}" wx:key="key" class="option-row">
+      <view class="option-key">{{item.key}}</view>
+      <input class="input option-input" value="{{item.text}}" data-index="{{index}}" bindinput="updateOption" disabled="{{form.type === 'judge'}}" />
+    </view>
+
+    <view class="label">正确答案</view>
+    <checkbox-group wx:if="{{form.type === 'multiple'}}" bindchange="changeMultiAnswer">
+      <label wx:for="{{form.options}}" wx:key="key" class="check-item">
+        <checkbox value="{{item.key}}" checked="{{form.answer.indexOf(item.key) >= 0}}" /> {{item.key}}
+      </label>
+    </checkbox-group>
+    <input wx:else class="input" value="{{form.answer}}" data-field="answer" bindinput="updateField" placeholder="单选填 A，判断填 true/false 或 正确/错误" />
+
+    <view class="label">答案解析</view>
+    <textarea class="textarea" value="{{form.analysis}}" data-field="analysis" bindinput="updateField" placeholder="请输入解析" />
+
+    <view class="label">分类</view>
+    <input class="input" value="{{form.category}}" data-field="category" bindinput="updateField" placeholder="请输入分类" />
+
+    <view class="label">难度</view>
+    <picker mode="selector" range="{{['简单','中等','困难']}}" bindchange="changeDifficulty">
+      <view class="picker">{{form.difficulty}}</view>
+    </picker>
+
+    <view class="switch-row">
+      <view class="label">是否模拟题</view>
+      <switch checked="{{form.isMock}}" bindchange="changeMock" />
+    </view>
+
+    <button class="primary-btn" bindtap="save">保存题目</button>
+  </view>
+</view>

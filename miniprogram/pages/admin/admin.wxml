@@ -1,0 +1,26 @@
+<view class="page">
+  <view class="header-card">
+    <view class="page-title">管理员中心</view>
+    <view class="page-desc">管理题库、会员与运营数据。</view>
+  </view>
+
+  <view class="section-title">数据概览</view>
+  <view wx:if="{{loading}}" class="state-card empty-state">正在读取数据...</view>
+  <view wx:else class="stats-grid">
+    <view wx:for="{{statList}}" wx:key="label" class="stat-card">
+      <view class="stat-value">{{item.value}}</view>
+      <view class="stat-label">{{item.label}}</view>
+    </view>
+  </view>
+
+  <view class="section-title">功能入口</view>
+  <view class="entry-list">
+    <view wx:for="{{entryList}}" wx:key="title" class="entry-card" data-url="{{item.url}}" bindtap="goPage">
+      <view>
+        <view class="entry-title">{{item.title}}</view>
+        <view class="entry-desc">{{item.desc}}</view>
+      </view>
+      <view class="entry-action">进入</view>
+    </view>
+  </view>
+</view>

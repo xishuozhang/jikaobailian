@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/category/category",
+    "pages/categoryPractice/categoryPractice",
+    "pages/randomPractice/index",
+    "pages/mockPractice/index",
+    "pages/study/study",
+    "pages/member/index",
+    "pages/recordDetail/recordDetail",
+    "pages/wrongPractice/wrongPractice",
+    "pages/admin/admin",
+    "pages/adminQuestions/adminQuestions",
+    "pages/adminQuestionForm/adminQuestionForm",
+    "pages/adminUsers/adminUsers",
+    "pages/adminImport/index",
+    "pages/mistakes/index",
+    "pages/profile/index",
+    "pages/example/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "刷题练习",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f6f6f6"
+  },
+  "sitemapLocation": "sitemap.json"
+}

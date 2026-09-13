@@ -1,0 +1,14 @@
+@import "../randomPractice/index.wxss";
+
+.empty-title {
+  color: #172033;
+  font-size: 34rpx;
+  font-weight: 700;
+}
+
+.empty-desc {
+  margin: 14rpx 0 26rpx;
+  color: #718096;
+  font-size: 27rpx;
+  line-height: 1.6;
+}

@@ -1,0 +1,31 @@
+<view class="page">
+  <view class="filter-card">
+    <input class="input" placeholder="搜索题干关键词" value="{{keyword}}" bindinput="onKeywordInput" />
+    <input class="input" placeholder="输入分类筛选" value="{{category}}" bindinput="onCategoryInput" />
+    <view class="actions">
+      <button class="nav-btn" bindtap="clearFilter">重置</button>
+      <button class="primary-btn" bindtap="search">搜索</button>
+    </view>
+  </view>
+
+  <button class="primary-btn add-btn" bindtap="goAdd">新增题目</button>
+
+  <view wx:if="{{loading}}" class="state-card empty-state">正在读取题库...</view>
+  <view wx:elif="{{!questions.length}}" class="state-card empty-state">暂无题目</view>
+
+  <view wx:else class="question-list">
+    <view wx:for="{{questions}}" wx:key="_id" class="question-card">
+      <view class="question-title">{{item.title}}</view>
+      <view class="meta-row">
+        <text class="tag">{{item.typeText}}</text>
+        <text class="tag">{{item.category}}</text>
+        <text class="tag">{{item.difficultyText}}</text>
+        <text class="tag">{{item.mockText}}</text>
+      </view>
+      <view class="actions">
+        <button class="nav-btn" data-id="{{item._id}}" bindtap="goEdit">编辑</button>
+        <button class="danger-btn" data-id="{{item._id}}" bindtap="deleteQuestion">删除</button>
+      </view>
+    </view>
+  </view>
+</view>

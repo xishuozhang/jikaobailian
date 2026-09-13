@@ -1,0 +1,31 @@
+<view class="home-page">
+  <view class="welcome-card">
+    <view class="welcome-kicker">今日学习</view>
+    <view class="title">刷题练习</view>
+    <view class="subtitle">选择练习方式，开始今日训练</view>
+  </view>
+
+  <view class="section-head">
+    <view class="section-title">功能入口</view>
+    <view class="section-note">{{entryList.length}} 个模块</view>
+  </view>
+
+  <view class="entry-grid">
+    <view
+      class="entry-card"
+      wx:for="{{entryList}}"
+      wx:key="url"
+      data-url="{{item.url}}"
+      bindtap="goPage"
+    >
+      <view class="entry-main">
+        <view class="entry-title-row">
+          <text class="entry-title">{{item.title}}</text>
+          <text wx:if="{{item.vip}}" class="vip-tag">VIP</text>
+        </view>
+        <view class="entry-desc">{{item.desc}}</view>
+      </view>
+      <view class="entry-action">进入</view>
+    </view>
+  </view>
+</view>

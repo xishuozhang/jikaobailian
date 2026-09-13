@@ -1,0 +1,65 @@
+<view class="page">
+  <view class="member-card">
+    <view class="vip-tag">{{isMember ? 'VIP' : '普通用户'}}</view>
+    <view class="page-title">会员中心</view>
+    <view class="page-desc">{{memberStatusText}}</view>
+    <view wx:if="{{memberExpireText}}" class="expire-text">{{memberExpireText}}</view>
+  </view>
+
+  <view class="benefit-card">
+    <view class="section-title">会员权益</view>
+    <view wx:for="{{benefits}}" wx:key="*this" class="benefit-item">
+      <view class="dot"></view>
+      <view class="benefit-text">{{item}}</view>
+    </view>
+  </view>
+
+  <view class="plan-card">
+    <view class="section-title">会员套餐</view>
+    <view wx:if="{{plansLoading}}" class="empty-text">正在读取套餐...</view>
+    <view wx:elif="{{!plans.length}}" class="empty-text">暂无可购买套餐</view>
+    <view wx:else class="plan-list">
+      <view wx:for="{{plans}}" wx:key="_id" class="plan-item">
+        <view class="plan-info">
+          <view class="plan-name">{{item.name}}</view>
+          <view class="plan-days">有效期 {{item.days}} 天</view>
+        </view>
+        <view class="plan-action">
+          <view class="plan-price">{{item.priceText}}</view>
+          <button
+            class="buy-btn"
+            size="mini"
+            loading="{{payingPlanId === item._id}}"
+            disabled="{{!!payingPlanId}}"
+            data-id="{{item._id}}"
+            bindtap="buyPlan"
+          >{{isMember ? '立即续费' : '立即开通'}}</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="order-card">
+    <view class="section-title">支付记录</view>
+    <view wx:if="{{ordersLoading}}" class="empty-text">正在读取支付记录...</view>
+    <view wx:elif="{{!orders.length}}" class="empty-text">暂无支付记录</view>
+    <view wx:else class="order-list">
+      <view wx:for="{{orders}}" wx:key="_id" class="order-item">
+        <view class="order-main">
+          <view class="order-title">{{item.planName}}</view>
+          <view class="order-time">{{item.createdAtText}}</view>
+        </view>
+        <view class="order-side">
+          <view class="order-fee">{{item.totalFeeText}}</view>
+          <view class="order-status {{item.status}}">{{item.statusText}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="tip-card">
+    支付成功后由微信支付回调自动开通会员。如遇异常，管理员仍可手动补偿开通。
+  </view>
+
+  <button class="primary-btn" bindtap="goBack">返回</button>
+</view>

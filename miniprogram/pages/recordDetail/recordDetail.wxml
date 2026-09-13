@@ -1,0 +1,45 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="state-card empty-state">正在读取记录...</view>
+
+  <view wx:elif="{{!detail}}" class="state-card empty-state">记录不存在或无权查看。</view>
+
+  <block wx:else>
+    <view class="score-card">
+      <view>
+        <view class="eyebrow">{{detail.practiceText}}</view>
+        <view class="score">{{detail.score}}分</view>
+      </view>
+      <view class="score-desc">完成时间：{{detail.dateText}}</view>
+      <view wx:if="{{detail.durationText}}" class="score-desc">本次用时：{{detail.durationText}}</view>
+    </view>
+
+    <view class="stats">
+      <view class="stat-item">
+        <view class="stat-value">{{detail.total}}</view>
+        <view class="stat-label">总题数</view>
+      </view>
+      <view class="stat-item good">
+        <view class="stat-value">{{detail.correctCount}}</view>
+        <view class="stat-label">正确</view>
+      </view>
+      <view class="stat-item bad">
+        <view class="stat-value">{{detail.wrongCount}}</view>
+        <view class="stat-label">错误</view>
+      </view>
+    </view>
+
+    <view class="section-title">逐题解析</view>
+    <view wx:for="{{questionList}}" wx:key="questionId" class="question-card">
+      <view class="question-meta">
+        <text class="type-tag">第 {{item.index}} 题</text>
+        <text class="type-tag blue">{{item.typeText}}</text>
+        <text class="result-tag {{item.resultClass}}">{{item.resultText}}</text>
+      </view>
+      <view class="question-title">{{item.title}}</view>
+      <image wx:if="{{item.imageUrl}}" class="question-image" src="{{item.imageUrl}}" mode="widthFix"></image>
+      <view class="answer-line wrong"><text class="answer-label">你的答案</text>{{item.userAnswerText}}</view>
+      <view class="answer-line right"><text class="answer-label">正确答案</text>{{item.correctAnswerText}}</view>
+      <view class="analysis-text">{{item.analysis}}</view>
+    </view>
+  </block>
+</view>

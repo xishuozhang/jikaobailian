@@ -1,0 +1,25 @@
+<view class="page">
+  <view class="header-card">
+    <view class="page-title">分类练习</view>
+    <view class="page-desc">选择一个知识分类，进行 10 题以内的专项训练。</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="state-card">正在读取分类...</view>
+  <view wx:elif="{{!categories.length}}" class="state-card">暂无分类题目，请先导入题库。</view>
+
+  <view wx:else class="category-list">
+    <view
+      wx:for="{{categories}}"
+      wx:key="name"
+      class="category-card"
+      data-category="{{item.name}}"
+      bindtap="goPractice"
+    >
+      <view>
+        <view class="category-name">{{item.name}}</view>
+        <view class="category-desc">{{item.count}} 道可练习题</view>
+      </view>
+      <view class="start-tag">开始</view>
+    </view>
+  </view>
+</view>

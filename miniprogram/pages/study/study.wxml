@@ -1,0 +1,109 @@
+<view class="page">
+  <view class="header-card">
+    <view>
+      <view class="page-title">学习中心</view>
+      <view class="page-desc">查看刷题进度、错题情况和最近练习。</view>
+    </view>
+  </view>
+
+  <view class="section-title">学习统计</view>
+  <view wx:if="{{statsLoading}}" class="state-card empty-state">正在读取学习统计...</view>
+  <view wx:elif="{{!userStats.hasData}}" class="state-card empty-state">暂无学习记录，先去完成一次练习吧。</view>
+  <block wx:else>
+    <view class="dashboard-grid">
+      <view class="dashboard-card">
+        <view class="dashboard-value">{{userStats.totalQuestionCount}}</view>
+        <view class="dashboard-label">累计做题数</view>
+      </view>
+      <view class="dashboard-card good">
+        <view class="dashboard-value">{{userStats.accuracyText}}</view>
+        <view class="dashboard-label">累计正确率</view>
+      </view>
+      <view class="dashboard-card bad">
+        <view class="dashboard-value">{{userStats.wrongQuestionCount}}</view>
+        <view class="dashboard-label">错题数量</view>
+      </view>
+      <view class="dashboard-card warn">
+        <view class="dashboard-value">{{userStats.unmasteredWrongCount}}</view>
+        <view class="dashboard-label">未掌握错题</view>
+      </view>
+      <view class="dashboard-card">
+        <view class="dashboard-value">{{userStats.bestMockScore}}</view>
+        <view class="dashboard-label">模拟最高分</view>
+      </view>
+      <view class="dashboard-card">
+        <view class="dashboard-value">{{userStats.latestPracticeScore}}</view>
+        <view class="dashboard-label">最近一次得分</view>
+      </view>
+    </view>
+  </block>
+
+  <view class="entry-list">
+    <view
+      wx:for="{{entryList}}"
+      wx:key="title"
+      class="entry-card"
+      data-url="{{item.url}}"
+      data-action="{{item.action}}"
+      bindtap="goEntry"
+    >
+      <view>
+        <view class="entry-title">{{item.title}}</view>
+        <view class="entry-desc">{{item.desc}}</view>
+      </view>
+      <view class="entry-action">进入</view>
+    </view>
+  </view>
+
+  <view class="mock-card">
+    <view class="mock-card-title">模拟考试</view>
+    <view class="mock-stats">
+      <view>
+        <view class="mock-value">{{userStats.mockPracticeCount}}</view>
+        <view class="mock-label">考试次数</view>
+      </view>
+      <view>
+        <view class="mock-value">{{userStats.bestMockScore}}</view>
+        <view class="mock-label">最高分</view>
+      </view>
+      <view>
+        <view class="mock-value">{{userStats.latestMockScore}}</view>
+        <view class="mock-label">最近一次</view>
+      </view>
+    </view>
+    <view class="recent-tip">最近 7 天完成 {{userStats.recent7DaysCount}} 次练习</view>
+  </view>
+
+  <view id="recentRecords" class="section-title">最近做题记录</view>
+  <view wx:if="{{loading}}" class="state-card empty-state">正在读取记录...</view>
+  <view wx:elif="{{!records.length}}" class="state-card empty-state">暂无学习记录，先去完成一次练习吧。</view>
+  <view wx:else class="record-list">
+    <view wx:for="{{records}}" wx:key="_id" class="record-card" data-id="{{item._id}}" bindtap="goRecordDetail">
+      <view class="record-head">
+        <view class="type-tag">{{item.practiceText}}</view>
+        <view class="date">{{item.dateText}}</view>
+      </view>
+      <view class="question-title">{{item.title}}</view>
+      <view class="record-foot">
+        <view class="answer">{{item.scoreText}}</view>
+        <view class="result {{item.resultClass}}">{{item.resultText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="category-card">
+    <view class="mock-card-title">分类正确率</view>
+    <view wx:if="{{!userStats.categoryStats.length}}" class="category-empty">暂无可统计分类数据</view>
+    <view wx:else class="category-list">
+      <view wx:for="{{userStats.categoryStats}}" wx:key="category" class="category-row">
+        <view class="category-head">
+          <view class="category-name">{{item.category}}</view>
+          <view class="category-meta">{{item.totalQuestionCount}}题 · {{item.accuracyText}}</view>
+        </view>
+        <view class="category-track">
+          <view class="category-fill" style="{{item.progressStyle}}"></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

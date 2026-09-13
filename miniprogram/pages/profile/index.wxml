@@ -1,0 +1,79 @@
+<view class="page">
+  <view class="profile-card">
+    <image class="avatar" src="{{avatarUrl}}" mode="aspectFill"></image>
+    <view class="profile-main">
+      <view class="profile-title-row">
+        <view class="page-title">{{nickName}}</view>
+        <view class="member-tag {{memberStatusClass}}">{{memberStatusText}}</view>
+      </view>
+      <view class="openid-text">OpenID：{{maskedOpenid}}</view>
+      <view class="member-expire">{{memberExpireText}}</view>
+    </view>
+  </view>
+
+  <view class="account-card">
+    <view class="section-title">账号管理</view>
+    <view class="menu-list">
+      <view class="menu-item" bindtap="goEditProfile">
+        <view>
+          <view class="menu-title">编辑个人资料</view>
+          <view class="menu-desc">修改昵称和头像</view>
+        </view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goStudy">
+        <view>
+          <view class="menu-title">学习中心</view>
+          <view class="menu-desc">进入学习相关功能页面</view>
+        </view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="goMember">
+        <view>
+          <view class="menu-title">会员中心</view>
+          <view class="menu-desc">查看会员状态与会员权益</view>
+        </view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view wx:if="{{isAdmin}}" class="menu-item" bindtap="goAdmin">
+        <view>
+          <view class="menu-title">管理员中心</view>
+          <view class="menu-desc">题库、会员与数据概览</view>
+        </view>
+        <view class="menu-arrow">›</view>
+      </view>
+      <view class="menu-item" bindtap="showAbout">
+        <view>
+          <view class="menu-title">关于小程序</view>
+          <view class="menu-desc">查看功能说明</view>
+        </view>
+        <view class="menu-arrow">›</view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{showEditPanel}}" class="edit-mask" bindtap="closeEditProfile">
+    <view class="edit-panel" catchtap="noop">
+      <view class="edit-title">编辑个人资料</view>
+      <view class="avatar-section">
+        <image class="avatar-preview" src="{{editAvatarUrl}}" mode="aspectFill"></image>
+        <button class="avatar-button" open-type="chooseAvatar" bindchooseavatar="onChooseAvatar">更换头像</button>
+      </view>
+      <view class="form-item">
+        <view class="form-label">昵称</view>
+        <input
+          class="nickname-input"
+          type="nickname"
+          value="{{editNickName}}"
+          placeholder="请输入昵称"
+          maxlength="20"
+          bindinput="onNickNameInput"
+        />
+      </view>
+      <view class="edit-actions">
+        <button class="cancel-button" bindtap="closeEditProfile">取消</button>
+        <button class="save-button" loading="{{savingProfile}}" disabled="{{savingProfile}}" bindtap="saveProfile">保存</button>
+      </view>
+    </view>
+  </view>
+</view>

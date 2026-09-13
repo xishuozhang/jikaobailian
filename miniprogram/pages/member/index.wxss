@@ -1,0 +1,221 @@
+page {
+  background: #F5F7FB;
+}
+
+.page {
+  min-height: 100vh;
+  padding: 36rpx 30rpx 48rpx;
+  box-sizing: border-box;
+}
+
+.member-card,
+.benefit-card,
+.plan-card,
+.order-card,
+.tip-card {
+  border: 1rpx solid #e4ebf5;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
+  box-sizing: border-box;
+}
+
+.member-card {
+  padding: 36rpx 34rpx;
+}
+
+.vip-tag {
+  display: inline-flex;
+  align-items: center;
+  height: 42rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  background: #fff3d8;
+  color: #9a6100;
+  font-size: 23rpx;
+  font-weight: 700;
+  line-height: 42rpx;
+}
+
+.page-title {
+  margin-top: 24rpx;
+  color: #172033;
+  font-size: 46rpx;
+  font-weight: 700;
+  line-height: 1.25;
+}
+
+.page-desc {
+  margin-top: 14rpx;
+  color: #405064;
+  font-size: 29rpx;
+  line-height: 1.6;
+}
+
+.expire-text {
+  margin-top: 12rpx;
+  color: #2F80ED;
+  font-size: 26rpx;
+  font-weight: 600;
+}
+
+.benefit-card,
+.plan-card,
+.order-card,
+.tip-card {
+  margin-top: 24rpx;
+  padding: 30rpx;
+}
+
+.section-title {
+  color: #172033;
+  font-size: 32rpx;
+  font-weight: 700;
+}
+
+.benefit-item {
+  display: flex;
+  align-items: center;
+  margin-top: 24rpx;
+}
+
+.dot {
+  width: 16rpx;
+  height: 16rpx;
+  border-radius: 50%;
+  background: #2F80ED;
+}
+
+.benefit-text {
+  flex: 1;
+  margin-left: 18rpx;
+  color: #263044;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.tip-card {
+  color: #6b7688;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+.empty-text {
+  margin-top: 24rpx;
+  color: #7b8798;
+  font-size: 27rpx;
+  line-height: 1.5;
+}
+
+.plan-list,
+.order-list {
+  margin-top: 22rpx;
+}
+
+.plan-item,
+.order-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24rpx 0;
+  border-top: 1rpx solid #eef2f7;
+}
+
+.plan-item:first-child,
+.order-item:first-child {
+  border-top: 0;
+}
+
+.plan-info,
+.order-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.plan-name,
+.order-title {
+  color: #172033;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.plan-days,
+.order-time {
+  margin-top: 8rpx;
+  color: #7b8798;
+  font-size: 24rpx;
+  line-height: 1.35;
+}
+
+.plan-action,
+.order-side {
+  margin-left: 18rpx;
+  text-align: right;
+}
+
+.plan-price,
+.order-fee {
+  color: #e06a22;
+  font-size: 30rpx;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.buy-btn {
+  margin-top: 10rpx;
+  min-width: 150rpx;
+  height: 58rpx;
+  border-radius: 12rpx;
+  background: #2F80ED;
+  color: #ffffff;
+  font-size: 24rpx;
+  font-weight: 600;
+  line-height: 58rpx;
+}
+
+.buy-btn[disabled] {
+  background: #b9c7dc;
+  color: #ffffff;
+}
+
+.order-status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8rpx;
+  min-width: 92rpx;
+  height: 38rpx;
+  border-radius: 999rpx;
+  background: #eef2f7;
+  color: #667386;
+  font-size: 22rpx;
+  line-height: 38rpx;
+}
+
+.order-status.paid {
+  background: #e8f6ef;
+  color: #21825b;
+}
+
+.order-status.pending {
+  background: #fff3d8;
+  color: #9a6100;
+}
+
+.order-status.failed,
+.order-status.closed {
+  background: #ffecec;
+  color: #c24747;
+}
+
+.primary-btn {
+  margin-top: 30rpx;
+  height: 88rpx;
+  border-radius: 14rpx;
+  background: #2F80ED;
+  color: #ffffff;
+  font-size: 30rpx;
+  font-weight: 600;
+  line-height: 88rpx;
+}

@@ -1,0 +1,14 @@
+node_modules/
+dist/
+build/
+coverage/
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+*.log
+.env
+.env.*
+!.env.example
+!.env.sample
+project.private.config.json

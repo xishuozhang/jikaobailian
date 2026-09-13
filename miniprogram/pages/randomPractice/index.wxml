@@ -1,0 +1,98 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="state-card empty-state">正在抽取练习题...</view>
+
+  <block wx:elif="{{result}}">
+    <view class="score-card">
+      <view>
+        <view class="eyebrow">练习结果</view>
+        <view class="score">{{result.score}}分</view>
+      </view>
+      <view class="score-desc">本次随机一练完成</view>
+    </view>
+
+    <view class="stats">
+      <view class="stat-item">
+        <view class="stat-value">{{result.total}}</view>
+        <view class="stat-label">总题数</view>
+      </view>
+      <view class="stat-item good">
+        <view class="stat-value">{{result.correctCount}}</view>
+        <view class="stat-label">正确</view>
+      </view>
+      <view class="stat-item bad">
+        <view class="stat-value">{{result.wrongCount}}</view>
+        <view class="stat-label">错误</view>
+      </view>
+    </view>
+
+    <view class="section-title">错题解析</view>
+    <view wx:if="{{!wrongResults.length}}" class="state-card empty-state">本次没有错题，继续保持！</view>
+    <view wx:for="{{wrongResults}}" wx:key="_id" class="analysis-card">
+      <view class="question-meta">
+        <text class="type-tag">第 {{item.index}} 题</text>
+        <text class="type-tag blue">{{item.typeText}}</text>
+      </view>
+      <view class="question-title">{{item.displayTitle || item.title}}</view>
+      <view wx:if="{{item.resultOptions.length}}" class="result-option-list">
+        <view wx:for="{{item.resultOptions}}" wx:for-item="option" wx:key="key" class="{{option.className}}">
+          <view class="result-option-main">
+            <view class="result-option-key">{{option.key}}</view>
+            <view class="result-option-text">{{option.text}}</view>
+          </view>
+          <view wx:if="{{option.badgeText}}" class="result-option-badge">{{option.badgeText}}</view>
+        </view>
+      </view>
+      <view class="answer-line wrong"><text class="answer-label">你的答案</text>{{item.selectedText}}</view>
+      <view class="answer-line right"><text class="answer-label">正确答案</text>{{item.correctText}}</view>
+      <view class="analysis-text">{{item.analysis}}</view>
+    </view>
+
+    <view class="result-actions">
+      <button class="result-btn result-btn-home" bindtap="goHome">返回首页</button>
+      <button class="result-btn result-btn-mistakes" bindtap="goMistakes">查看错题本</button>
+      <button class="result-btn result-btn-retry" bindtap="restart">再练一次</button>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="topbar card">
+      <view class="topbar-main">
+        <view class="page-title">随机一练</view>
+        <view class="page-desc">完成 {{questions.length}} 道题后提交，马上查看解析。</view>
+      </view>
+      <view class="progress">第 {{progressText}} 题</view>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progressPercent}}%;"></view>
+    </view>
+
+    <view wx:if="{{currentQuestion}}" class="question-card">
+      <view class="question-meta">
+        <text class="type-tag blue">{{currentQuestion.typeText}}</text>
+      </view>
+      <view class="question-title">{{currentQuestion.displayTitle || currentQuestion.title}}</view>
+      <image wx:if="{{currentQuestion.imageUrl}}" class="question-image" src="{{currentQuestion.imageUrl}}" mode="widthFix"></image>
+
+      <view class="options">
+        <view
+          wx:for="{{currentQuestion.options}}"
+          wx:key="key"
+          class="option {{item.selected ? 'selected' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="selectOption"
+        >
+          <view class="option-key">{{item.key}}</view>
+          <view class="option-text">{{item.text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="state-card empty-state">暂无可练习题目，请稍后再试。</view>
+
+    <view class="action-bar" wx:if="{{currentQuestion}}">
+      <button class="nav-btn" bindtap="goPrev" disabled="{{prevDisabled}}">上一题</button>
+      <button wx:if="{{!atLast}}" class="primary-btn" bindtap="goNext">下一题</button>
+      <button wx:else class="primary-btn" loading="{{submitting}}" bindtap="submitPractice">提交练习</button>
+    </view>
+  </block>
+</view>

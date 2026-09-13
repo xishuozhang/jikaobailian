@@ -1,0 +1,11 @@
+[
+  {
+    "username": "admin",
+    "password": "123456",
+    "realName": "系统管理员",
+    "enabled": true,
+    "role": "super_admin",
+    "createdAt": "2026-01-01 00:00:00",
+    "updatedAt": "2026-01-01 00:00:00"
+  }
+]

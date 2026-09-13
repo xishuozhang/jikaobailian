@@ -1,0 +1,112 @@
+@import "../adminQuestions/adminQuestions.wxss";
+
+.form-card {
+  border: 1rpx solid #e4ebf5;
+  border-radius: 20rpx;
+  background: #ffffff;
+  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
+  box-sizing: border-box;
+  padding: 28rpx;
+}
+
+.label {
+  margin: 18rpx 0 12rpx;
+  color: #172033;
+  font-size: 28rpx;
+  font-weight: 700;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 150rpx;
+  padding: 20rpx;
+  border: 1rpx solid #dce5f2;
+  border-radius: 14rpx;
+  color: #172033;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.picker {
+  height: 82rpx;
+  padding: 0 22rpx;
+  border: 1rpx solid #dce5f2;
+  border-radius: 14rpx;
+  color: #172033;
+  font-size: 28rpx;
+  line-height: 82rpx;
+}
+
+.option-row {
+  display: flex;
+  align-items: center;
+  gap: 14rpx;
+}
+
+.image-actions {
+  display: flex;
+  gap: 14rpx;
+  margin-top: 16rpx;
+}
+
+.image-btn {
+  flex: 1;
+  margin: 0;
+}
+
+.image-btn.danger {
+  border-color: #ffd5d0;
+  background: #fff4f2;
+  color: #d65348;
+}
+
+.image-preview-wrap {
+  margin-top: 18rpx;
+  padding: 18rpx;
+  border-radius: 14rpx;
+  background: #f5f7fb;
+}
+
+.image-preview {
+  width: 100%;
+  border-radius: 12rpx;
+}
+
+.image-url-text {
+  margin-top: 12rpx;
+  color: #6b7688;
+  font-size: 23rpx;
+  line-height: 1.45;
+  word-break: break-all;
+}
+
+.option-key {
+  width: 52rpx;
+  height: 52rpx;
+  border-radius: 50%;
+  background: #eaf2ff;
+  color: #2F80ED;
+  font-size: 24rpx;
+  font-weight: 700;
+  line-height: 52rpx;
+  text-align: center;
+}
+
+.option-input {
+  flex: 1;
+}
+
+.check-item {
+  display: inline-flex;
+  align-items: center;
+  margin-right: 28rpx;
+  color: #405064;
+  font-size: 28rpx;
+}
+
+.switch-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28rpx;
+}

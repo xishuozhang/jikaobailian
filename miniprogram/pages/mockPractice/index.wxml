@@ -1,0 +1,151 @@
+<view class="page">
+  <view wx:if="{{checking || loading}}" class="state-card empty-state">
+    {{loadingText}}
+  </view>
+
+  <view wx:elif="{{memberBlocked}}" class="member-empty">
+    <view class="member-badge">VIP</view>
+    <view class="member-title">会员专属模拟练习</view>
+    <view class="member-desc">模拟练习为会员专属内容，请联系管理员开通会员后使用。</view>
+    <button class="primary-btn" bindtap="goMember">去会员中心</button>
+    <button class="nav-btn" bindtap="goHome">返回</button>
+  </view>
+
+  <block wx:elif="{{result}}">
+    <view class="score-card">
+      <view>
+        <view class="eyebrow">模拟结果</view>
+        <view class="score">{{result.score}}分</view>
+      </view>
+      <view class="score-desc">本次会员模拟练习完成 · {{result.submitText}}</view>
+      <view wx:if="{{result.durationText}}" class="score-desc">本次用时：{{result.durationText}}</view>
+    </view>
+
+    <view class="stats">
+      <view class="stat-item">
+        <view class="stat-value">{{result.total}}</view>
+        <view class="stat-label">总题数</view>
+      </view>
+      <view class="stat-item good">
+        <view class="stat-value">{{result.correctCount}}</view>
+        <view class="stat-label">正确</view>
+      </view>
+      <view class="stat-item bad">
+        <view class="stat-value">{{result.wrongCount}}</view>
+        <view class="stat-label">错误</view>
+      </view>
+    </view>
+
+    <view class="section-title">错题解析</view>
+    <view wx:if="{{!wrongResults.length}}" class="state-card empty-state">本次没有错题，继续保持！</view>
+    <view wx:for="{{wrongResults}}" wx:key="_id" class="analysis-card">
+      <view class="question-meta">
+        <text class="type-tag">第 {{item.index}} 题</text>
+        <text class="type-tag orange">{{item.typeText}}</text>
+      </view>
+      <view class="question-title">{{item.displayTitle || item.title}}</view>
+      <view class="answer-line wrong"><text class="answer-label">你的答案</text>{{item.selectedText}}</view>
+      <view class="answer-line right"><text class="answer-label">正确答案</text>{{item.correctText}}</view>
+      <view class="analysis-text">{{item.analysis}}</view>
+    </view>
+
+    <view class="result-actions">
+      <button class="nav-btn" bindtap="goHome">返回首页</button>
+      <button class="nav-btn" bindtap="goMistakes">查看错题本</button>
+      <button class="primary-btn" bindtap="restart">再练一次</button>
+    </view>
+  </block>
+
+  <block wx:else>
+    <view class="topbar card">
+      <view class="topbar-main">
+        <view class="title-row">
+          <view class="page-title">会员模拟考试</view>
+          <view class="vip-tag">VIP</view>
+        </view>
+        <view class="page-desc">按考试节奏完成整套练习。</view>
+      </view>
+      <view class="progress">第 {{progressText}} 题</view>
+    </view>
+    <view class="timer-card {{timeWarning ? 'warning' : ''}}">
+      <view>
+        <view class="timer-label">剩余时间</view>
+        <view class="timer-value">{{timeText}}</view>
+      </view>
+      <view class="answer-count">
+        <view>已答 {{answeredCount}}</view>
+        <view>未答 {{unansweredCount}}</view>
+      </view>
+    </view>
+    <view class="exam-tools">
+      <button class="sheet-entry" bindtap="openAnswerSheet">答题卡</button>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill" style="width: {{progressPercent}}%;"></view>
+    </view>
+
+    <view wx:if="{{currentQuestion}}" class="question-card">
+      <view class="question-meta">
+        <text class="type-tag orange">{{currentQuestion.typeText}}</text>
+      </view>
+      <view class="question-title">{{currentQuestion.displayTitle || currentQuestion.title}}</view>
+      <image wx:if="{{currentQuestion.imageUrl}}" class="question-image" src="{{currentQuestion.imageUrl}}" mode="widthFix"></image>
+
+      <view class="options">
+        <view
+          wx:for="{{currentQuestion.options}}"
+          wx:key="key"
+          class="option {{item.selected ? 'selected' : ''}}"
+          data-key="{{item.key}}"
+          bindtap="selectOption"
+        >
+          <view class="option-key">{{item.key}}</view>
+          <view class="option-text">{{item.text}}</view>
+        </view>
+      </view>
+    </view>
+
+    <view wx:else class="state-card empty-state">暂无模拟题目。</view>
+
+    <view class="action-bar" wx:if="{{currentQuestion}}">
+      <button class="nav-btn" bindtap="goPrev" disabled="{{prevDisabled}}">上一题</button>
+      <button class="nav-btn" bindtap="goNext" disabled="{{atLast}}">下一题</button>
+      <button class="primary-btn" loading="{{submitting}}" bindtap="confirmSubmit">交卷</button>
+    </view>
+
+    <view wx:if="{{answerSheetVisible}}" class="sheet-mask" bindtap="closeAnswerSheet">
+      <view class="sheet-panel" catchtap="noop">
+        <view class="sheet-head">
+          <view>
+            <view class="sheet-title">答题卡</view>
+            <view class="sheet-desc">点击题号快速跳转</view>
+          </view>
+          <button class="sheet-close" bindtap="closeAnswerSheet">关闭</button>
+        </view>
+        <view class="sheet-stats">
+          <view class="sheet-stat">
+            <view class="sheet-stat-value">{{questions.length}}</view>
+            <view class="sheet-stat-label">总题数</view>
+          </view>
+          <view class="sheet-stat answered">
+            <view class="sheet-stat-value">{{answeredCount}}</view>
+            <view class="sheet-stat-label">已答</view>
+          </view>
+          <view class="sheet-stat unanswered">
+            <view class="sheet-stat-value">{{unansweredCount}}</view>
+            <view class="sheet-stat-label">未答</view>
+          </view>
+        </view>
+        <view class="sheet-grid">
+          <view
+            wx:for="{{answerSheetItems}}"
+            wx:key="id"
+            class="sheet-number {{item.statusClass}}"
+            data-index="{{index}}"
+            bindtap="jumpToQuestion"
+          >{{item.number}}</view>
+        </view>
+      </view>
+    </view>
+  </block>
+</view>

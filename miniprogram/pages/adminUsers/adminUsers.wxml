@@ -1,0 +1,30 @@
+<view class="page">
+  <view class="filter-card">
+    <input class="input" placeholder="搜索昵称或 openid" value="{{keyword}}" bindinput="onKeywordInput" />
+    <button class="primary-btn" bindtap="search">搜索用户</button>
+  </view>
+
+  <view wx:if="{{loading}}" class="state-card empty-state">正在读取用户...</view>
+  <view wx:elif="{{!users.length}}" class="state-card empty-state">暂无用户</view>
+
+  <view wx:else>
+    <view wx:for="{{users}}" wx:key="_id" class="user-card">
+      <view class="user-head">
+        <view>
+          <view class="user-name">{{item.displayName}}</view>
+          <view class="openid">{{item.maskedOpenid}}</view>
+        </view>
+        <view class="result {{item.memberClass}}">{{item.memberText}}</view>
+      </view>
+      <view class="meta-line">会员到期：{{item.expireText}}</view>
+      <view class="meta-line">注册时间：{{item.createdText}}</view>
+      <view class="actions">
+        <button class="primary-btn" data-openid="{{item.openid}}" bindtap="setMember">设置会员</button>
+        <picker mode="date" data-openid="{{item.openid}}" bindchange="onDateChange">
+          <view class="picker-btn">自定义日期</view>
+        </picker>
+        <button class="danger-btn" data-openid="{{item.openid}}" bindtap="cancelMember">取消会员</button>
+      </view>
+    </view>
+  </view>
+</view>

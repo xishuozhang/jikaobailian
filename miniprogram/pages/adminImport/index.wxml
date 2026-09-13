@@ -1,0 +1,79 @@
+<view class="page">
+  <view class="header-card">
+    <view class="page-title">题库批量导入</view>
+    <view class="page-desc">支持粘贴 JSON、上传 JSON 文件或上传 CSV 文件。导入会按题干和分类判断重复，重复题将跳过。</view>
+  </view>
+
+  <view class="form-card">
+    <view class="mode-tabs">
+      <view
+        wx:for="{{modeTabs}}"
+        wx:key="key"
+        class="mode-tab {{mode === item.key ? 'active' : ''}}"
+        data-mode="{{item.key}}"
+        bindtap="switchMode"
+      >{{item.text}}</view>
+    </view>
+
+    <block wx:if="{{mode === 'paste'}}">
+      <view class="label">JSON 题库数据</view>
+      <textarea class="textarea json-area" value="{{jsonText}}" bindinput="onInput" placeholder="请粘贴 JSON 数组..." />
+    </block>
+
+    <block wx:elif="{{mode === 'jsonFile'}}">
+      <view class="label">JSON 文件</view>
+      <button class="primary-btn file-btn" bindtap="chooseFile">选择 JSON 文件</button>
+      <view class="file-name">{{fileName || '尚未选择文件'}}</view>
+    </block>
+
+    <block wx:else>
+      <view class="label">CSV 文件</view>
+      <button class="primary-btn file-btn" bindtap="chooseFile">选择 CSV 文件</button>
+      <view class="file-name">{{fileName || '尚未选择文件'}}</view>
+    </block>
+
+    <view class="actions">
+      <button class="nav-btn" bindtap="copySample">复制示例格式</button>
+      <button class="nav-btn" bindtap="validateJson">校验格式</button>
+    </view>
+
+    <view wx:if="{{validateText}}" class="result-line">{{validateText}}</view>
+    <view wx:if="{{validateErrors.length}}" class="validate-error-list">
+      <view wx:for="{{validateErrors}}" wx:key="*this" class="error-text">- {{item}}</view>
+    </view>
+
+    <button class="primary-btn import-btn" loading="{{importing}}" bindtap="importQuestions">开始导入</button>
+  </view>
+
+  <view wx:if="{{result}}" class="result-card">
+    <view class="section-title">导入结果</view>
+    <view class="result-grid">
+      <view class="result-stat">
+        <view class="stat-value">{{result.total}}</view>
+        <view class="stat-label">总题数</view>
+      </view>
+      <view class="result-stat success">
+        <view class="stat-value">{{result.successCount}}</view>
+        <view class="stat-label">成功导入</view>
+      </view>
+      <view class="result-stat skip">
+        <view class="stat-value">{{result.skippedCount}}</view>
+        <view class="stat-label">重复跳过</view>
+      </view>
+      <view class="result-stat fail">
+        <view class="stat-value">{{result.failCount}}</view>
+        <view class="stat-label">导入失败</view>
+      </view>
+    </view>
+
+    <view wx:if="{{result.errors.length}}" class="result-block">
+      <view class="label">失败详情</view>
+      <view wx:for="{{result.errors}}" wx:key="*this" class="error-text">- {{item}}</view>
+    </view>
+
+    <view wx:if="{{result.skippedItems.length}}" class="result-block">
+      <view class="label">重复详情</view>
+      <view wx:for="{{result.skippedItems}}" wx:key="title" class="skip-text">- “{{item.title}}”已存在，已跳过。</view>
+    </view>
+  </view>
+</view>

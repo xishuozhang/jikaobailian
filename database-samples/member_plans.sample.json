@@ -1,0 +1,35 @@
+[
+  {
+    "_id": "monthly",
+    "name": "月度会员",
+    "days": 30,
+    "price": 990,
+    "priceText": "9.90元",
+    "enabled": true,
+    "sort": 1,
+    "createdAt": "数据库服务时间",
+    "updatedAt": "数据库服务时间"
+  },
+  {
+    "_id": "quarterly",
+    "name": "季度会员",
+    "days": 90,
+    "price": 1990,
+    "priceText": "19.90元",
+    "enabled": true,
+    "sort": 2,
+    "createdAt": "数据库服务时间",
+    "updatedAt": "数据库服务时间"
+  },
+  {
+    "_id": "yearly",
+    "name": "年度会员",
+    "days": 365,
+    "price": 5990,
+    "priceText": "59.90元",
+    "enabled": true,
+    "sort": 3,
+    "createdAt": "数据库服务时间",
+    "updatedAt": "数据库服务时间"
+  }
+]

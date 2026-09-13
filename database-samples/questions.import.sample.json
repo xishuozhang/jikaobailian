@@ -1,0 +1,154 @@
+[
+  {
+    "title": "Photoshop 中用于非破坏性隐藏图层局部内容的功能是？",
+    "type": "single",
+    "imageUrl": "",
+    "options": [
+      { "label": "A", "text": "图层蒙版" },
+      { "label": "B", "text": "合并图层" },
+      { "label": "C", "text": "删除图层" },
+      { "label": "D", "text": "栅格化文字" }
+    ],
+    "answer": ["A"],
+    "analysis": "图层蒙版可以控制图层局部显示与隐藏，不直接破坏原图层内容。",
+    "category": "Photoshop基础",
+    "difficulty": "easy",
+    "isMock": true
+  },
+  {
+    "title": "下列哪些属于常见图像文件格式？",
+    "type": "multiple",
+    "imageUrl": "",
+    "options": [
+      { "label": "A", "text": "JPG" },
+      { "label": "B", "text": "PNG" },
+      { "label": "C", "text": "GIF" },
+      { "label": "D", "text": "MP3" }
+    ],
+    "answer": ["A", "B", "C"],
+    "analysis": "JPG、PNG、GIF 都是常见图像格式，MP3 是音频格式。",
+    "category": "图像格式",
+    "difficulty": "easy",
+    "isMock": true
+  },
+  {
+    "title": "分辨率通常可以用于描述图像的清晰程度。",
+    "type": "judge",
+    "imageUrl": "",
+    "options": [
+      { "label": "true", "text": "正确" },
+      { "label": "false", "text": "错误" }
+    ],
+    "answer": ["true"],
+    "analysis": "在相同尺寸下，分辨率越高，通常图像细节越丰富。",
+    "category": "分辨率",
+    "difficulty": "easy",
+    "isMock": false
+  },
+  {
+    "title": "RGB 色彩模式主要适用于哪类输出场景？",
+    "type": "single",
+    "imageUrl": "",
+    "options": [
+      { "label": "A", "text": "屏幕显示" },
+      { "label": "B", "text": "四色印刷" },
+      { "label": "C", "text": "雕刻加工" },
+      { "label": "D", "text": "音频混音" }
+    ],
+    "answer": ["A"],
+    "analysis": "RGB 是基于光色的加色模式，主要用于显示器、手机屏幕等发光设备。",
+    "category": "色彩模式",
+    "difficulty": "easy",
+    "isMock": true
+  },
+  {
+    "title": "版式设计中的对齐、重复、对比、亲密性都有助于提升画面组织性。",
+    "type": "judge",
+    "imageUrl": "",
+    "options": [
+      { "label": "true", "text": "正确" },
+      { "label": "false", "text": "错误" }
+    ],
+    "answer": ["true"],
+    "analysis": "这些原则可以帮助信息更清晰、有序地呈现。",
+    "category": "版式设计",
+    "difficulty": "medium",
+    "isMock": false
+  },
+  {
+    "title": "视频帧率 25fps 表示什么？",
+    "type": "single",
+    "imageUrl": "",
+    "options": [
+      { "label": "A", "text": "每秒显示 25 帧画面" },
+      { "label": "B", "text": "视频宽度为 25 像素" },
+      { "label": "C", "text": "视频总时长 25 秒" },
+      { "label": "D", "text": "音频采样率为 25Hz" }
+    ],
+    "answer": ["A"],
+    "analysis": "fps 是 frames per second 的缩写，表示每秒播放的画面帧数。",
+    "category": "视频基础",
+    "difficulty": "easy",
+    "isMock": true
+  },
+  {
+    "title": "下列哪些可以作为数字媒体作品中的素材？",
+    "type": "multiple",
+    "imageUrl": "",
+    "options": [
+      { "label": "A", "text": "图片" },
+      { "label": "B", "text": "音频" },
+      { "label": "C", "text": "视频" },
+      { "label": "D", "text": "动画" }
+    ],
+    "answer": ["A", "B", "C", "D"],
+    "analysis": "数字媒体作品可以综合使用图片、音频、视频、动画等多种素材。",
+    "category": "多媒体素材",
+    "difficulty": "easy",
+    "isMock": true
+  },
+  {
+    "title": "多媒体作品发布前通常需要检查版权、文件大小和播放兼容性。",
+    "type": "judge",
+    "imageUrl": "",
+    "options": [
+      { "label": "true", "text": "正确" },
+      { "label": "false", "text": "错误" }
+    ],
+    "answer": ["true"],
+    "analysis": "发布前检查版权、体积和兼容性可以减少传播和使用问题。",
+    "category": "多媒体作品发布",
+    "difficulty": "medium",
+    "isMock": true
+  },
+  {
+    "title": "CMYK 色彩模式常用于哪类场景？",
+    "type": "single",
+    "imageUrl": "",
+    "options": [
+      { "label": "A", "text": "印刷输出" },
+      { "label": "B", "text": "网页播放音频" },
+      { "label": "C", "text": "三维建模布线" },
+      { "label": "D", "text": "视频字幕压缩" }
+    ],
+    "answer": ["A"],
+    "analysis": "CMYK 是印刷中常用的减色模式，包含青、品红、黄、黑四色。",
+    "category": "色彩模式",
+    "difficulty": "medium",
+    "isMock": false
+  },
+  {
+    "title": "在版式设计中，文字层级可以通过字号、字重、颜色和位置建立。",
+    "type": "judge",
+    "imageUrl": "",
+    "options": [
+      { "label": "true", "text": "正确" },
+      { "label": "false", "text": "错误" }
+    ],
+    "answer": ["true"],
+    "analysis": "合理的文字层级能帮助用户快速判断信息主次。",
+    "category": "版式设计",
+    "difficulty": "easy",
+    "isMock": false
+  }
+]
