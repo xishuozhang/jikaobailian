@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/friendPk/index",
     "pages/category/category",
     "pages/categoryPractice/categoryPractice",
     "pages/randomPractice/index",

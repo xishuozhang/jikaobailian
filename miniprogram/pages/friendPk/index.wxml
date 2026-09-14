@@ -1,0 +1,48 @@
+<view class="pk-page {{resultKind}}">
+  <view class="pk-heading"><view><view class="eyebrow">FRIEND CHALLENGE</view><view class="page-title">好友 PK</view></view><view class="mode-label">双人同题</view></view>
+  <view wx:if="{{errorText}}" class="connection-banner"><text>{{errorText}}</text><button bindtap="retry" disabled="{{busy}}">重试</button></view>
+
+  <block wx:if="{{!room}}">
+    <view class="setup-scene"><view class="versus-mark">VS</view><view class="scene-title">和朋友，来一场较量</view><view class="scene-subtitle">同一套题 · 分高者胜 · 同分平局</view></view>
+    <view class="setup-section"><view class="section-title">对战时长</view><view class="duration-options"><button wx:for="{{durations}}" wx:key="value" data-value="{{item.value}}" bindtap="chooseDuration" class="duration-option {{duration === item.value ? 'active' : ''}}" disabled="{{busy}}">{{item.text}}</button></view></view>
+    <view class="rule-row"><text>每局题量</text><text>最多 10 题</text></view><view class="rule-row"><text>开局方式</text><text>双方准备后开始</text></view>
+    <button class="primary-button" loading="{{busy}}" disabled="{{busy}}" bindtap="createRoom">创建 PK 房间</button>
+    <button wx:if="{{resumeId}}" class="secondary-button" disabled="{{busy}}" bindtap="resumeRoom">返回上次对战</button>
+    <button class="text-button" bindtap="goHome">返回首页</button>
+  </block>
+
+  <block wx:elif="{{room.status === 'waiting'}}">
+    <view class="room-caption">{{room.total}} 道题 · {{room.duration / 60}} 分钟<text class="room-note">邀请 15 分钟内有效</text></view>
+    <view class="arena waiting-arena">
+      <view class="fighter"><view class="avatar-frame me"><image src="{{me.avatar || '/images/avatar.png'}}" mode="aspectFill" /></view><view class="fighter-name">{{me.name}}</view><view class="player-role">我</view><view class="ready-state {{me.ready ? 'is-ready' : ''}}">{{me.ready ? '已准备' : '未准备'}}</view></view>
+      <view class="versus-small">VS</view>
+      <view class="fighter"><view class="avatar-frame opponent {{!opponent ? 'searching' : ''}}"><image wx:if="{{opponent}}" src="{{opponent.avatar || '/images/avatar.png'}}" mode="aspectFill" /><text wx:else class="waiting-symbol">?</text></view><view class="fighter-name">{{opponent ? opponent.name : '等待好友'}}</view><view class="player-role">对手</view><view class="ready-state {{opponent.ready ? 'is-ready' : ''}}">{{opponent ? opponent.ready ? '已准备' : '未准备' : '待加入'}}</view></view>
+    </view>
+    <view class="waiting-message"><view class="pulse-line"></view><text>{{!opponent ? '邀请一位好友，开启这场挑战' : me.ready && !opponent.ready ? '等待好友准备' : '准备好后，就可以开始了'}}</text></view>
+    <button wx:if="{{!opponent}}" open-type="share" class="primary-button">分享邀请好友</button>
+    <button class="{{!opponent ? 'secondary-button' : 'primary-button'}}" loading="{{busy}}" disabled="{{busy}}" bindtap="toggleReady">{{me.ready ? '取消准备' : '我准备好了'}}</button>
+    <button class="text-button" disabled="{{busy}}" bindtap="leaveRoom">退出房间</button>
+  </block>
+
+  <block wx:elif="{{room.status === 'playing'}}">
+    <view class="live-board"><view class="live-player"><image src="{{me.avatar || '/images/avatar.png'}}" mode="aspectFill" /><view><view class="live-name">我</view><view class="live-count">{{me.answered}} / {{room.total}}</view></view></view><view class="timer {{remaining <= 15 ? 'urgent' : ''}}">{{timerText}}</view><view class="live-player rival"><view><view class="live-name">对手</view><view class="live-count">{{opponent.answered}} / {{room.total}}</view></view><image src="{{opponent.avatar || '/images/avatar.png'}}" mode="aspectFill" /></view></view>
+    <view class="race-tracks"><view class="race-track"><view class="race-fill" style="width: {{me.answered / room.total * 100}}%;"></view></view><view class="race-track"><view class="race-fill rival-fill" style="width: {{opponent.answered / room.total * 100}}%;"></view></view></view>
+    <view wx:if="{{countdown}}" class="countdown-scene"><view class="countdown-number">{{countdown}}</view><view class="scene-title">即将开始</view><view class="scene-subtitle">同一套题，公平较量</view></view>
+    <view wx:elif="{{me.done || !remaining}}" class="settling-scene"><view class="versus-mark small">{{me.done ? 'OK' : '00'}}</view><view class="scene-title">{{me.done ? '你已完成作答' : '时间到'}}</view><view class="scene-subtitle">{{me.done && remaining ? '等待对手完成，马上揭晓结果' : '正在同步最终成绩'}}</view></view>
+    <view wx:elif="{{currentQuestion}}" class="question-area"><view class="question-meta"><text class="question-type">{{currentQuestion.typeText}}</text><text>第 {{currentIndex + 1}} / {{room.total}} 题</text></view><view class="question-title">{{currentQuestion.title}}</view><image wx:if="{{currentQuestion.imageUrl}}" class="question-image" src="{{currentQuestion.imageUrl}}" mode="widthFix" />
+      <view class="option-list"><view wx:for="{{currentQuestion.options}}" wx:key="key" class="option {{item.selected ? 'selected' : ''}}" data-key="{{item.key}}" bindtap="selectOption"><view class="option-key">{{item.key}}</view><view class="option-text">{{item.text}}</view></view></view>
+      <button class="primary-button" bindtap="confirmAnswer" loading="{{busy}}" disabled="{{busy || !canConfirm || !remaining}}">{{currentIndex + 1 === room.total ? '确认并完成' : '确认，下一题'}}</button>
+    </view>
+    <view wx:else class="waiting-message">正在同步题目...</view>
+    <button class="text-button" bindtap="leaveRoom" disabled="{{busy}}">退出本场对战</button>
+  </block>
+
+  <block wx:elif="{{room.status === 'finished'}}">
+    <view class="result-scene"><view wx:if="{{resultKind === 'win'}}" class="confetti"><view wx:for="{{sparks}}" wx:key="id" class="spark" style="{{item.style}}"></view></view><view class="result-emblem">{{resultKind === 'win' ? 'WIN' : resultKind === 'draw' ? 'DRAW' : 'NEXT'}}</view><view class="result-title">{{resultTitle}}</view><view class="result-subtitle">{{resultSubtitle}}</view></view>
+    <view class="arena result-arena"><view class="fighter"><view class="avatar-frame me"><image src="{{me.avatar || '/images/avatar.png'}}" mode="aspectFill" /></view><view class="fighter-name">{{me.name}}</view><view class="final-score">{{me.score}}<text>分</text></view><view class="score-detail">答对 {{me.correct}} / {{room.total}}</view></view><view class="versus-small">:</view><view class="fighter"><view class="avatar-frame opponent"><image src="{{opponent.avatar || '/images/avatar.png'}}" mode="aspectFill" /></view><view class="fighter-name">{{opponent.name}}</view><view class="final-score rival-score">{{opponent.score}}<text>分</text></view><view class="score-detail">答对 {{opponent.correct}} / {{room.total}}</view></view></view>
+    <button class="primary-button" bindtap="newRound">再开一局</button><button class="secondary-button" bindtap="toggleReview">{{showReview ? '收起解析' : '查看本局解析'}}</button><button class="text-button" bindtap="goHome">返回首页</button>
+    <view wx:if="{{showReview}}" class="review-list"><view wx:for="{{review}}" wx:key="id" class="review-item"><view class="question-meta"><text>{{item.number}}. {{item.typeText}}</text><text class="{{item.correct ? 'correct-text' : 'wrong-text'}}">{{item.correct ? '正确' : '未答对'}}</text></view><view class="question-title">{{item.title}}</view><image wx:if="{{item.imageUrl}}" class="question-image" src="{{item.imageUrl}}" mode="widthFix" /><view wx:for="{{item.options}}" wx:for-item="option" wx:key="key" class="review-option">{{option.key}}. {{option.text}}</view><view class="review-answer">我的答案 {{item.mineText}}<text>正确答案 {{item.answerText}}</text></view><view class="analysis-text">{{item.analysis}}</view></view></view>
+  </block>
+
+  <block wx:else><view class="settling-scene"><view class="scene-title">{{room.status === 'expired' ? '邀请已过期' : '房间已关闭'}}</view><view class="scene-subtitle">重新开一局，邀请好友加入</view></view><button class="primary-button" bindtap="newRound">创建新对战</button><button class="text-button" bindtap="goHome">返回首页</button></block>
+</view>

@@ -6,13 +6,12 @@
         <view class="page-title">{{nickName}}</view>
         <view class="member-tag {{memberStatusClass}}">{{memberStatusText}}</view>
       </view>
-      <view class="openid-text">OpenID：{{maskedOpenid}}</view>
       <view class="member-expire">{{memberExpireText}}</view>
     </view>
   </view>
 
   <view class="account-card">
-    <view class="section-title">账号管理</view>
+    <view class="section-title">我的服务</view>
     <view class="menu-list">
       <view class="menu-item" bindtap="goEditProfile">
         <view>
@@ -24,7 +23,7 @@
       <view class="menu-item" bindtap="goStudy">
         <view>
           <view class="menu-title">学习中心</view>
-          <view class="menu-desc">进入学习相关功能页面</view>
+          <view class="menu-desc">做题记录与学习统计</view>
         </view>
         <view class="menu-arrow">›</view>
       </view>

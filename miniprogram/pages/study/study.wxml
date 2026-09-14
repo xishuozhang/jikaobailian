@@ -2,7 +2,7 @@
   <view class="header-card">
     <view>
       <view class="page-title">学习中心</view>
-      <view class="page-desc">查看刷题进度、错题情况和最近练习。</view>
+      <view class="page-desc">每一次练习，都在积累进步</view>
     </view>
   </view>
 
@@ -51,7 +51,7 @@
         <view class="entry-title">{{item.title}}</view>
         <view class="entry-desc">{{item.desc}}</view>
       </view>
-      <view class="entry-action">进入</view>
+      <view class="entry-action">›</view>
     </view>
   </view>
 

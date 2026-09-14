@@ -4,6 +4,39 @@ cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV });
 
 const db = cloud.database();
 
+const CATEGORY_ORDER = [
+  "网页设计",
+  "数字摄影摄像",
+  "图形图像处理知识",
+  "实用美术基础"
+];
+
+const includesAny = (text, keywords) => keywords.some((keyword) => text.includes(keyword.toLowerCase()));
+
+const normalizeMainCategory = (category) => {
+  const text = `${category || ""}`.trim().toLowerCase();
+
+  if (includesAny(text, [
+    "网页", "网站", "web", "html", "css", "javascript", "js", "盒子模型", "超链接", "表单", "浏览器", "响应式"
+  ])) {
+    return "网页设计";
+  }
+
+  if (includesAny(text, [
+    "摄影", "摄像", "拍摄", "相机", "照相", "镜头", "光圈", "快门", "曝光", "感光度", "白平衡", "焦距", "景别", "机位"
+  ])) {
+    return "数字摄影摄像";
+  }
+
+  if (includesAny(text, [
+    "图形图像", "图形", "图像", "photoshop", "ps", "illustrator", "ai", "位图", "矢量", "像素", "图层", "蒙版", "通道", "路径", "rgb", "cmyk"
+  ])) {
+    return "图形图像处理知识";
+  }
+
+  return "实用美术基础";
+};
+
 const isCollectionMissing = (error) => {
   const message = `${error.errMsg || error.message || ""}`;
   return message.includes("collection not exists")
@@ -56,16 +89,28 @@ const getRecordScore = (record = {}) => {
   return percent(getRecordCorrect(record), getRecordTotal(record));
 };
 
-const getRecordCategory = (record = {}) => {
-  if (record.category) {
-    return record.category;
+const addCategoryRecord = (categoryMap, record) => {
+  const add = (category, total, correct) => {
+    const stats = categoryMap[normalizeMainCategory(category)];
+    stats.totalQuestionCount += total;
+    stats.correctCount += correct;
+  };
+  const questions = Array.isArray(record.questionsSnapshot) ? record.questionsSnapshot : [];
+  if (Array.isArray(record.answers) && record.answers.length) {
+    const questionMap = new Map(questions.map((question) => [question.questionId || question._id, question]));
+    record.answers.forEach((answer, index) => {
+      // Match IDs first: missing or deleted questions can leave snapshots out of sequence.
+      const question = answer.questionId ? questionMap.get(answer.questionId) : questions[index];
+      if (question || record.category) {
+        add(question ? question.category : record.category, 1, answer.isCorrect === true ? 1 : 0);
+      }
+    });
+    return;
   }
-
-  if (Array.isArray(record.questionsSnapshot) && record.questionsSnapshot.length) {
-    return "";
+  if (record.questionSnapshot || record.category) {
+    add(record.questionSnapshot ? record.questionSnapshot.category : record.category,
+      getRecordTotal(record), getRecordCorrect(record));
   }
-
-  return record.questionSnapshot && record.questionSnapshot.category || "";
 };
 
 exports.main = async () => {
@@ -103,7 +148,11 @@ exports.main = async () => {
   let totalCorrectCount = 0;
   let recent7DaysCount = 0;
   const sevenDaysAgo = Date.now() - 7 * 24 * 60 * 60 * 1000;
-  const categoryMap = {};
+  const categoryMap = Object.fromEntries(CATEGORY_ORDER.map((category) => [category, {
+    category,
+    totalQuestionCount: 0,
+    correctCount: 0
+  }]));
   const mockRecords = [];
 
   answerRecords.forEach((record) => {
@@ -122,28 +171,14 @@ exports.main = async () => {
       mockRecords.push(record);
     }
 
-    const category = getRecordCategory(record);
-    if (category) {
-      if (!categoryMap[category]) {
-        categoryMap[category] = {
-          category,
-          totalQuestionCount: 0,
-          correctCount: 0,
-          accuracyRate: 0
-        };
-      }
-      categoryMap[category].totalQuestionCount += total;
-      categoryMap[category].correctCount += correct;
-    }
+    addCategoryRecord(categoryMap, record);
   });
 
-  const categoryStats = Object.keys(categoryMap)
+  const categoryStats = CATEGORY_ORDER
     .map((key) => ({
       ...categoryMap[key],
       accuracyRate: percent(categoryMap[key].correctCount, categoryMap[key].totalQuestionCount)
-    }))
-    .sort((a, b) => b.totalQuestionCount - a.totalQuestionCount)
-    .slice(0, 8);
+    }));
 
   const wrongQuestionCount = wrongRecords.length;
   const masteredWrongCount = wrongRecords.filter((record) => record.mastered === true).length;

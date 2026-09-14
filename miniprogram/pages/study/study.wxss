@@ -1,10 +1,10 @@
 page {
-  background: #F5F7FB;
+  background: #ffffff;
 }
 
 .page {
   min-height: 100vh;
-  padding: 36rpx 30rpx 48rpx;
+  padding: 24rpx 36rpx 48rpx;
   box-sizing: border-box;
 }
 
@@ -15,16 +15,16 @@ page {
 .mock-card,
 .category-card,
 .record-card {
-  border: 1rpx solid #e4ebf5;
-  border-radius: 20rpx;
+  border: 0;
+  border-radius: 0;
   background: #ffffff;
-  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
+  box-shadow: none;
   box-sizing: border-box;
 }
 
 .header-card {
-  padding: 32rpx;
-  margin-bottom: 28rpx;
+  padding: 12rpx 0 8rpx;
+  margin-bottom: 20rpx;
 }
 
 .page-title {
@@ -61,17 +61,22 @@ page {
 
 .dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18rpx;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0;
+  padding: 12rpx 0;
+  background: #f7fafc;
+  border-radius: 16rpx;
 }
 
 .dashboard-card {
-  padding: 26rpx 22rpx;
+  padding: 24rpx 8rpx;
+  text-align: center;
+  background: transparent;
 }
 
 .dashboard-value {
   color: #172033;
-  font-size: 42rpx;
+  font-size: 36rpx;
   font-weight: 700;
   line-height: 1.2;
 }
@@ -97,13 +102,18 @@ page {
 .entry-list {
   margin-top: 24rpx;
   overflow: hidden;
+  border-top: 12rpx solid #f6f7f9;
+  border-bottom: 12rpx solid #f6f7f9;
+  margin-left: -36rpx;
+  margin-right: -36rpx;
 }
 
 .entry-card {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 26rpx 30rpx;
+  padding: 26rpx 36rpx;
+  gap: 20rpx;
 }
 
 .entry-card + .entry-card {
@@ -124,14 +134,14 @@ page {
 }
 
 .entry-action {
-  color: #2F80ED;
-  font-size: 26rpx;
+  color: #a6b0bb;
+  font-size: 36rpx;
   font-weight: 700;
 }
 
 .mock-card,
 .category-card {
-  padding: 28rpx;
+  padding: 20rpx 0;
   margin-top: 24rpx;
 }
 
@@ -166,8 +176,9 @@ page {
 }
 
 .record-card {
-  margin-bottom: 20rpx;
-  padding: 30rpx;
+  margin-bottom: 0;
+  padding: 28rpx 0;
+  border-bottom: 1rpx solid #edf0f3;
 }
 
 .record-head,
@@ -256,6 +267,7 @@ page {
 .category-name {
   flex: 1;
   min-width: 0;
+  word-break: break-all;
   color: #263044;
   font-size: 27rpx;
   font-weight: 700;

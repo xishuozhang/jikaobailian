@@ -4,7 +4,7 @@ Page({
     categories: []
   },
 
-  onLoad() {
+  onShow() {
     this.loadCategories();
   },
 
@@ -25,7 +25,10 @@ Page({
       }
 
       this.setData({
-        categories: result.categories || [],
+        categories: (result.categories || []).map((item) => ({
+          ...item,
+          practicedText: typeof item.practicedCount === "number" ? item.practicedCount : "--"
+        })),
         loading: false
       });
     } catch (error) {

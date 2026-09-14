@@ -1,90 +1,17 @@
-page {
-  background: #F5F7FB;
-}
-
-.page {
-  min-height: 100vh;
-  padding: 36rpx 30rpx 48rpx;
-  box-sizing: border-box;
-}
-
-.header-card,
-.state-card,
-.category-card {
-  border: 1rpx solid #e4ebf5;
-  border-radius: 20rpx;
-  background: #ffffff;
-  box-shadow: 0 12rpx 30rpx rgba(37, 64, 103, 0.06);
-  box-sizing: border-box;
-}
-
-.header-card,
-.state-card,
-.category-card {
-  padding: 30rpx;
-}
-
-.header-card {
-  margin-bottom: 24rpx;
-}
-
-.page-title {
-  color: #172033;
-  font-size: 42rpx;
-  font-weight: 700;
-  line-height: 1.3;
-}
-
-.page-desc {
-  margin-top: 12rpx;
-  color: #6b7688;
-  font-size: 27rpx;
-  line-height: 1.6;
-}
-
-.state-card {
-  color: #6b7688;
-  font-size: 28rpx;
-  line-height: 1.6;
-  text-align: center;
-}
-
-.category-list {
-  display: flex;
-  flex-direction: column;
-  gap: 20rpx;
-}
-
-.category-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.category-card:active {
-  background: #f8fbff;
-}
-
-.category-name {
-  color: #172033;
-  font-size: 32rpx;
-  font-weight: 700;
-  line-height: 1.4;
-}
-
-.category-desc {
-  margin-top: 10rpx;
-  color: #718096;
-  font-size: 25rpx;
-}
-
-.start-tag {
-  flex: 0 0 auto;
-  margin-left: 20rpx;
-  padding: 10rpx 18rpx;
-  border-radius: 999rpx;
-  background: #eaf2ff;
-  color: #2F80ED;
-  font-size: 24rpx;
-  font-weight: 700;
-}
+page { background: #ffffff; }
+.page { min-height: 100vh; padding: 24rpx 36rpx 48rpx; box-sizing: border-box; }
+.header-card { padding: 12rpx 0 32rpx; border-bottom: 12rpx solid #f6f7f9; margin: 0 -36rpx 12rpx; padding-left: 36rpx; padding-right: 36rpx; }
+.page-title { color: #242932; font-size: 40rpx; font-weight: 700; line-height: 1.4; }
+.page-desc { margin-top: 12rpx; color: #858d98; font-size: 25rpx; line-height: 1.6; }
+.state-card { padding: 60rpx 20rpx; color: #858d98; font-size: 27rpx; text-align: center; line-height: 1.7; }
+.category-card { display: flex; align-items: center; padding: 30rpx 0; gap: 22rpx; border-bottom: 1rpx solid #edf0f3; }
+.category-number { flex: 0 0 62rpx; height: 62rpx; border-radius: 12rpx; line-height: 62rpx; text-align: center; font-size: 26rpx; font-weight: 600; background: #edf6ff; color: #378cdb; }
+.category-card:nth-child(3n + 2) .category-number { background: #edf8f2; color: #419e7a; }
+.category-card:nth-child(3n) .category-number { background: #fff4e9; color: #d6934e; }
+.category-copy { flex: 1; min-width: 0; }
+.category-name { color: #303640; font-size: 30rpx; font-weight: 600; line-height: 1.5; word-break: break-all; }
+.category-desc { margin-top: 10rpx; color: #9198a2; font-size: 24rpx; }
+.practiced-count { color: #378cdb; font-weight: 600; }
+.progress-total { color: #788391; }
+.start-tag { flex-shrink: 0; color: #abb4bf; font-size: 38rpx; }
+.category-card:active { background: #f7fafc; }

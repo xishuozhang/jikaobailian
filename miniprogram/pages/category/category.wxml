@@ -1,7 +1,7 @@
 <view class="page">
   <view class="header-card">
     <view class="page-title">分类练习</view>
-    <view class="page-desc">选择一个知识分类，进行 10 题以内的专项训练。</view>
+    <view class="page-desc">专项突破 · 每组最多 10 题</view>
   </view>
 
   <view wx:if="{{loading}}" class="state-card">正在读取分类...</view>
@@ -15,11 +15,12 @@
       data-category="{{item.name}}"
       bindtap="goPractice"
     >
-      <view>
+      <view class="category-number">{{index + 1}}</view>
+      <view class="category-copy">
         <view class="category-name">{{item.name}}</view>
-        <view class="category-desc">{{item.count}} 道可练习题</view>
+        <view class="category-desc">已练习 <text class="practiced-count">{{item.practicedText}}</text><text class="progress-total"> / {{item.count}}</text> 题</view>
       </view>
-      <view class="start-tag">开始</view>
+      <view class="start-tag">›</view>
     </view>
   </view>
 </view>

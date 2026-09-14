@@ -4,13 +4,10 @@
   <view wx:elif="{{!detail}}" class="state-card empty-state">记录不存在或无权查看。</view>
 
   <block wx:else>
+    <view class="report-heading"><view class="page-title">练习报告</view><view class="report-type">{{detail.practiceText}}</view></view>
     <view class="score-card">
-      <view>
-        <view class="eyebrow">{{detail.practiceText}}</view>
-        <view class="score">{{detail.score}}分</view>
-      </view>
-      <view class="score-desc">完成时间：{{detail.dateText}}</view>
-      <view wx:if="{{detail.durationText}}" class="score-desc">本次用时：{{detail.durationText}}</view>
+      <view class="score-main"><view class="eyebrow">本次得分</view><view class="score">{{detail.score}}<text class="score-unit">分</text></view></view>
+      <view class="report-meta"><view class="score-desc">{{detail.dateText}}</view><view wx:if="{{detail.durationText}}" class="score-desc">用时 {{detail.durationText}}</view></view>
     </view>
 
     <view class="stats">
@@ -28,18 +25,20 @@
       </view>
     </view>
 
-    <view class="section-title">逐题解析</view>
+    <view class="section-heading"><view class="section-title">逐题解析</view><text class="section-note">{{questionList.length}} 道题目</text></view>
     <view wx:for="{{questionList}}" wx:key="questionId" class="question-card">
       <view class="question-meta">
-        <text class="type-tag">第 {{item.index}} 题</text>
-        <text class="type-tag blue">{{item.typeText}}</text>
+        <text class="question-number">{{item.index}}.</text>
+        <text class="type-tag">{{item.typeText}}</text>
         <text class="result-tag {{item.resultClass}}">{{item.resultText}}</text>
       </view>
       <view class="question-title">{{item.title}}</view>
       <image wx:if="{{item.imageUrl}}" class="question-image" src="{{item.imageUrl}}" mode="widthFix"></image>
-      <view class="answer-line wrong"><text class="answer-label">你的答案</text>{{item.userAnswerText}}</view>
-      <view class="answer-line right"><text class="answer-label">正确答案</text>{{item.correctAnswerText}}</view>
-      <view class="analysis-text">{{item.analysis}}</view>
+      <view class="answer-summary">
+        <view class="answer-line {{item.resultClass}}"><text class="answer-label">你的答案</text><text class="answer-value">{{item.userAnswerText}}</text></view>
+        <view class="answer-line right"><text class="answer-label">正确答案</text><text class="answer-value">{{item.correctAnswerText}}</text></view>
+      </view>
+      <view class="analysis-box"><view class="analysis-label">答案解析</view><view class="analysis-text">{{item.analysis}}</view></view>
     </view>
   </block>
 </view>

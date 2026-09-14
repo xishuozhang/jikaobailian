@@ -1,38 +1,48 @@
 Page({
   data: {
-    entryList: [
-      {
-        title: "随机一练",
-        desc: "快速抽题，随时开始练习",
-        url: "/pages/randomPractice/index"
-      },
-      {
-        title: "分类练习",
-        desc: "按知识分类专项巩固",
-        url: "/pages/category/category"
-      },
-      {
-        title: "模拟练习",
-        desc: "按考试节奏完成整套练习",
-        url: "/pages/mockPractice/index",
-        vip: true
-      },
-      {
-        title: "错题本",
-        desc: "回顾薄弱题目，集中巩固",
-        url: "/pages/mistakes/index"
-      },
-      {
-        title: "学习中心",
-        desc: "查看统计、记录和学习入口",
-        url: "/pages/study/study"
-      },
-      {
-        title: "个人中心",
-        desc: "管理账号、会员和个人信息",
-        url: "/pages/profile/index"
+    statsLoading: true,
+    statsError: false,
+    totalQuestionCount: 0,
+    accuracyText: "0%",
+    unmasteredWrongCount: 0
+  },
+
+  onShow() {
+    this.loadStats();
+  },
+
+  async loadStats() {
+    this.setData({ statsLoading: true, statsError: false });
+    try {
+      const { result } = await wx.cloud.callFunction({ name: "getUserStats" });
+      if (!result || result.errCode || !result.stats) {
+        throw new Error("Learning statistics unavailable");
       }
-    ]
+      const stats = result.stats;
+      this.setData({
+        totalQuestionCount: stats.totalQuestionCount || 0,
+        accuracyText: `${Number(stats.accuracyRate) || 0}%`,
+        unmasteredWrongCount: stats.unmasteredWrongCount || 0,
+        statsLoading: false
+      });
+    } catch (error) {
+      this.setData({ statsLoading: false, statsError: true });
+      console.error("getUserStats failed", error);
+    }
+  },
+
+  onShareAppMessage() {
+    return {
+      title: "刷题练习",
+      path: "/pages/index/index"
+    };
+  },
+
+  onShareTimeline() {
+    return {
+      title: "刷题练习",
+      query: ""
+    };
   },
 
   goPage(e) {

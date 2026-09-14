@@ -1,3 +1,5 @@
+const { normalizeCategoryStats } = require("../../utils/category-stats");
+
 const TYPE_TEXT = {
   single: "单选题",
   multiple: "多选题",
@@ -55,11 +57,7 @@ const normalizeUserStats = (stats = {}) => ({
   recent7DaysCount: stats.recent7DaysCount || 0,
   latestPracticeScore: stats.latestPractice && typeof stats.latestPractice.score === "number" ? stats.latestPractice.score : 0,
   hasData: (stats.totalPracticeCount || 0) > 0 || (stats.totalQuestionCount || 0) > 0,
-  categoryStats: (stats.categoryStats || []).map((item) => ({
-    ...item,
-    accuracyText: formatPercent(item.accuracyRate),
-    progressStyle: `width: ${Math.max(Math.min(Number(item.accuracyRate) || 0, 100), 0)}%;`
-  }))
+  categoryStats: normalizeCategoryStats(stats.categoryStats || [])
 });
 
 const normalizeRecords = (records = []) => records.map((record) => {

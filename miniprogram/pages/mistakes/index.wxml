@@ -2,41 +2,41 @@
   <view class="header-card">
     <view>
       <view class="page-title">错题本</view>
-      <view class="page-desc">错题会自动记录，方便复习巩固。</view>
+      <view class="page-desc">温故知新，把薄弱点逐个掌握</view>
     </view>
-    <view class="count">{{records.length}}题</view>
+    <view class="count">{{loading ? '--' : records.length}}<text class="count-unit"> 题</text></view>
   </view>
 
   <view class="practice-entry-card">
-    <view>
+    <view class="practice-entry-copy">
       <view class="practice-entry-title">只练未掌握错题</view>
-      <view class="practice-entry-desc">{{hasUnmasteredWrong ? '从未掌握错题中抽取练习，答对后可回错题本手动标记。' : '暂无未掌握错题'}}</view>
+      <view class="practice-entry-desc">{{hasUnmasteredWrong ? '集中复习，让知识更牢固' : '暂无未掌握错题'}}</view>
     </view>
     <button class="practice-entry-btn" disabled="{{!hasUnmasteredWrong}}" bindtap="goWrongPractice">开始练习</button>
   </view>
 
-  <view class="record-head">
-    <view
+  <view class="status-tabs">
+    <button
       wx:for="{{statusTabs}}"
       wx:key="key"
-      class="{{activeStatus === item.key ? 'wrong-count' : 'type-tag'}}"
+      class="status-tab {{activeStatus === item.key ? 'active' : ''}}"
       data-status="{{item.key}}"
       bindtap="switchStatus"
-    >{{item.text}}</view>
+    >{{item.text}}</button>
   </view>
 
   <view wx:if="{{loading}}" class="state-card empty-state">正在整理错题...</view>
   <view wx:elif="{{!records.length}}" class="state-card empty-state">
-    <view class="empty-title">暂无错题</view>
-    <view class="empty-desc">暂无错题，先去随机一练试试吧。</view>
+    <view class="empty-title">{{activeStatus === 'mastered' ? '还没有已掌握的错题' : activeStatus === 'unmastered' ? '暂无待巩固错题' : '暂无错题记录'}}</view>
+    <view class="empty-desc">{{activeStatus === 'mastered' ? '复习后标记已掌握，进步会留在这里。' : '继续练习，积累新的进步。'}}</view>
     <button class="primary-btn" bindtap="goPractice">去随机一练</button>
   </view>
 
   <view wx:else class="record-list">
     <view wx:for="{{records}}" wx:key="_id" class="record-card">
       <view class="record-head">
-        <view class="type-tag">{{item.typeText}}</view>
-        <view class="date">{{item.dateText}}</view>
+        <view class="question-meta"><text class="question-number">{{index + 1}}.</text><view class="type-tag">{{item.typeText}}</view></view>
+        <view class="mastery-status {{item.mastered ? 'right' : 'pending'}}">{{item.statusText}}</view>
       </view>
       <view class="question-title">{{item.title}}</view>
       <image wx:if="{{item.imageUrl}}" class="question-image" src="{{item.imageUrl}}" mode="widthFix"></image>
@@ -49,23 +49,26 @@
           <view wx:if="{{option.badgeText}}" class="option-badge">{{option.badgeText}}</view>
         </view>
       </view>
-      <view class="answer-line wrong">你的答案：{{item.selectedText}}</view>
-      <view class="answer-line right">正确答案：{{item.correctText}}</view>
-      <view class="wrong-count">累计错 {{item.wrongCount}} 次</view>
-      <view class="type-tag">{{item.statusText}}</view>
-      <view class="date">最近答错：{{item.dateText}}</view>
+      <view class="answer-summary">
+        <view class="answer-line wrong"><text class="answer-label">你的答案</text><text class="answer-value">{{item.selectedText}}</text></view>
+        <view class="answer-line right"><text class="answer-label">正确答案</text><text class="answer-value">{{item.correctText}}</text></view>
+      </view>
       <view class="analysis-box">
-        <view class="analysis-label">解析</view>
+        <view class="analysis-label">答案解析</view>
         <view class="analysis-text">{{item.analysis}}</view>
       </view>
-      <button
-        class="primary-btn"
-        loading="{{operating}}"
-        data-id="{{item._id}}"
-        data-question-id="{{item.questionId}}"
-        data-action="{{item.actionName}}"
-        bindtap="toggleMastered"
-      >{{item.actionText}}</button>
+      <view class="record-footer">
+        <view class="review-history"><view class="wrong-count">累计答错 {{item.wrongCount}} 次</view><view wx:if="{{item.dateText}}" class="date">最近 {{item.dateText}}</view></view>
+        <button
+          class="mastery-button {{item.mastered ? 'restore' : ''}}"
+          loading="{{operating}}"
+          disabled="{{operating}}"
+          data-id="{{item._id}}"
+          data-question-id="{{item.questionId}}"
+          data-action="{{item.actionName}}"
+          bindtap="toggleMastered"
+        >{{item.actionText}}</button>
+      </view>
     </view>
   </view>
 </view>
