@@ -27,9 +27,16 @@ const STATUS_TEXT = {
   failed: "支付失败"
 };
 
-const requestPayment = (payment) => new Promise((resolve, reject) => {
-  wx.requestPayment({
-    ...(payment || {}),
+const requestVirtualPayment = (payment) => new Promise((resolve, reject) => {
+  if (typeof wx.requestVirtualPayment !== "function") {
+    reject(new Error("当前微信版本不支持虚拟支付"));
+    return;
+  }
+  wx.requestVirtualPayment({
+    signData: payment.signData,
+    paySig: payment.paySig,
+    signature: payment.signature,
+    mode: payment.mode || "short_series_goods",
     success: resolve,
     fail: reject
   });
@@ -131,9 +138,10 @@ Page({
     this.setData({ payingPlanId: id });
 
     try {
+      const login = await new Promise((resolve, reject) => wx.login({ success: resolve, fail: reject }));
       const { result } = await wx.cloud.callFunction({
         name: "createMemberOrder",
-        data: { planId: id }
+        data: { planId: id, code: login.code }
       });
 
       if (result.errCode) {
@@ -142,7 +150,7 @@ Page({
         return;
       }
 
-      await requestPayment(result.payment);
+      await requestVirtualPayment(result.payment);
       wx.showToast({ title: "支付成功，会员开通中", icon: "none" });
 
       setTimeout(() => {

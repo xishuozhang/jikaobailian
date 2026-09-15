@@ -9,8 +9,8 @@
 - `login`：获取用户 openid，并在 `users` 集合中创建或更新用户。
 - `checkMember`：读取 `users` 集合中的会员状态。
 - `getMemberPlans`：读取启用中的会员套餐，按排序返回；开发环境无套餐时返回默认套餐。
-- `createMemberOrder`：创建会员支付订单，并调用云开发微信支付统一下单。
-- `payCallback`：接收微信支付回调，确认支付成功后自动开通或续期会员。
+- `createMemberOrder`：创建会员支付订单并生成个人主体虚拟支付双签名。
+- `payCallback`：接收虚拟支付结果回调，确认支付成功后自动开通或续期会员。
 - `getPaymentOrders`：读取当前用户自己的会员支付记录。
 - `getRandomQuestions`：从 `questions` 集合随机获取练习题。
 - `getMockQuestions`：会员校验通过后获取模拟练习题。
@@ -154,28 +154,30 @@
 
 会员套餐示例文件：`database-samples/member_plans.sample.json`。
 
-## 微信支付开通会员
+## 个人主体虚拟支付开通会员
 
-本项目的会员购买使用微信原生小程序 + 微信云开发支付能力完成，不需要 Spring Boot、MySQL 或第三方框架。
+完整的 OfferID、AppKey、虚拟道具配置、回调和部署前检查清单见 [`docs/virtual-payment.md`](docs/virtual-payment.md)。本项目使用 `wx.requestVirtualPayment`，不使用普通商户号的 `wx.requestPayment`。
+
+本项目的会员购买使用微信原生小程序 + 微信云开发云函数完成，不需要 Spring Boot、MySQL 或第三方框架。
 
 上线前需要完成以下配置：
 
-1. 申请并开通微信支付商户号。
-2. 在微信公众平台将小程序 AppID 关联到微信支付商户号。
-3. 在云开发控制台开通并配置云开发支付能力。
+1. 在微信公众平台开通个人主体虚拟支付并取得 OfferID、现网 AppKey。
+2. 在虚拟支付后台创建并发布与会员套餐对应的道具。
+3. 在云函数 `createMemberOrder` 配置虚拟支付环境变量。
 4. 创建 `member_plans` 和 `payment_orders` 集合，并导入 `database-samples/member_plans.sample.json`。
 5. 上传部署 `getMemberPlans`、`createMemberOrder`、`payCallback`、`getPaymentOrders` 云函数。
-6. 在 `cloudfunctions/createMemberOrder/index.js` 中确认并替换 `subMchId`，确认 `envId` 和 `functionName: "payCallback"` 与当前云环境及回调云函数名称一致。
-7. 支付成功后必须由 `payCallback` 确认微信支付回调，再更新 `users`、`payment_orders` 和 `member_logs`。不要只依赖前端 `wx.requestPayment` 的 `success` 回调开通会员。
+6. 在虚拟支付后台配置 `payCallback` 为支付结果/发货回调云函数。
+7. 支付成功后必须由 `payCallback` 确认回调，再更新 `users`、`payment_orders` 和 `member_logs`。不要只依赖前端支付成功回调开通会员。
 8. 管理员手动开通会员功能仍然保留，用于测试、线下收款、补偿用户和客服处理异常订单。
 
 支付流程：
 
 1. 会员页调用 `getMemberPlans` 展示启用中的会员套餐。
 2. 用户点击“立即开通”或“立即续费”后调用 `createMemberOrder`。
-3. `createMemberOrder` 写入 `payment_orders` 的 `pending` 订单，并调用 `cloud.cloudPay.unifiedOrder` 创建微信支付订单。
-4. 前端调用 `wx.requestPayment` 拉起微信支付。
-5. 微信支付成功后触发 `payCallback`。
+3. `createMemberOrder` 写入 `payment_orders` 的 `pending` 订单，并生成 `signData`、`paySig`、`signature`。
+4. 前端调用 `wx.requestVirtualPayment` 拉起虚拟支付。
+5. 虚拟支付结果回调触发 `payCallback`。
 6. `payCallback` 校验订单、金额和幂等状态，自动开通或续期会员，并写入 `member_logs`。
 
 ## 题库批量导入

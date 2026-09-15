@@ -57,10 +57,10 @@ const ensureCollection = async (name) => {
 
 exports.main = async (event = {}) => {
   const outTradeNo = event.outTradeNo || event.out_trade_no || event.data && (event.data.outTradeNo || event.data.out_trade_no);
-  const transactionId = event.transactionId || event.transaction_id || event.data && (event.data.transactionId || event.data.transaction_id) || "";
-  const totalFee = Number(event.totalFee || event.total_fee || event.data && (event.data.totalFee || event.data.total_fee));
+  const transactionId = event.transactionId || event.transaction_id || event.wxOrderId || event.wx_order_id || event.data && (event.data.transactionId || event.data.transaction_id || event.data.wxOrderId || event.data.wx_order_id) || "";
+  const totalFee = Number(event.totalFee || event.total_fee || event.paidFee || event.paid_fee || event.data && (event.data.totalFee || event.data.total_fee || event.data.paidFee || event.data.paid_fee));
   const openid = event.openid || event.openId || event.OPENID || event.data && (event.data.openid || event.data.openId);
-  const resultCode = event.resultCode || event.result_code || event.returnCode || event.return_code || "SUCCESS";
+  const resultCode = event.resultCode || event.result_code || event.returnCode || event.return_code || event.payStatus || event.pay_status || "SUCCESS";
 
   if (resultCode !== "SUCCESS") {
     return payFail("支付结果不是成功状态");
@@ -81,7 +81,7 @@ exports.main = async (event = {}) => {
     return paySuccess();
   }
 
-  if (Number(order.totalFee) !== totalFee) {
+  if (Number.isFinite(totalFee) && totalFee > 0 && Number(order.totalFee) !== totalFee) {
     await db.collection("payment_orders").doc(order._id).update({
       data: {
         status: "failed",
@@ -140,6 +140,7 @@ exports.main = async (event = {}) => {
       status: "paid",
       payProcessing: false,
       transactionId,
+      wxOrderId: transactionId,
       paidAt: db.serverDate(),
       updatedAt: db.serverDate(),
       memberExpireAtBefore: beforeText,

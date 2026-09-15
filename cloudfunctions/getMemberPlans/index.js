@@ -10,6 +10,7 @@ const DEFAULT_PLANS = [
     name: "月度会员",
     days: 30,
     price: 990,
+    productId: "member_monthly",
     priceText: "9.90元",
     enabled: true,
     sort: 1
@@ -19,6 +20,7 @@ const DEFAULT_PLANS = [
     name: "季度会员",
     days: 90,
     price: 1990,
+    productId: "member_quarterly",
     priceText: "19.90元",
     enabled: true,
     sort: 2
@@ -28,6 +30,7 @@ const DEFAULT_PLANS = [
     name: "年度会员",
     days: 365,
     price: 5990,
+    productId: "member_yearly",
     priceText: "59.90元",
     enabled: true,
     sort: 3
