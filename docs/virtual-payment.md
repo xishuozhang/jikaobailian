@@ -10,6 +10,7 @@
 - `VIRTUAL_PAYMENT_APP_KEY`：现网 AppKey。
 - `VIRTUAL_PAYMENT_SANDBOX_APP_KEY`：沙箱 AppKey（可选）。
 - `VIRTUAL_PAYMENT_ENV`：`0` 现网，`1` 沙箱；上线前必须为 `0`。
+- `VIRTUAL_PAYMENT_PUSH_TOKEN`：消息推送页面填写的 Token，必须完全一致。
 
 不要把 AppKey、AppSecret 或签名写入小程序代码或 Git。
 
@@ -22,7 +23,8 @@
 - [ ] 个人主体虚拟支付已审核通过，OfferID、现网 AppKey 已取得。
 - [ ] 虚拟商品已创建、价格与套餐一致并已发布。
 - [ ] `createMemberOrder` 已配置环境变量并部署。
-- [ ] `payCallback` 已部署，并在虚拟支付后台配置为支付结果/发货回调云函数。
+- [ ] `payCallback`、`virtualPaymentNotify` 已部署；HTTP 访问服务路由已绑定 `virtualPaymentNotify`。
+- [ ] 小程序后台“开发与服务 → 开发管理 → 消息推送”已填写 HTTP URL、Token，并通过 GET 验证。
 - [ ] `payment_orders`、`member_logs`、`users` 集合已创建；客户端权限不能直接写订单和会员字段。
 - [ ] 小程序基础库不低于 2.19.2，并在真机验证 `wx.requestVirtualPayment`。
 - [ ] 沙箱支付成功后，回调能按 `outTradeNo` 幂等开通会员；重复回调不会重复延长有效期。
